@@ -377,6 +377,7 @@
     <Compile Include="Types\Customers\CustomersTab.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Types\Customers\CustomersVerticalBarWithHeaderAndAliases.cs" />
     <Compile Include="Types\Customers\CustomersVerticalBarWithHeader.cs" />
     <Compile Include="Types\Customers\CustomersVerticalBar.cs">
       <SubType>Code</SubType>
@@ -510,6 +511,7 @@
     <Content Include="Data\Good\ConditionalRecords4.txt" />
     <Content Include="Data\Good\ConverterDecimals1.txt" />
     <Content Include="Data\Good\ConverterDecimals2.txt" />
+    <Content Include="Data\Good\CustomersVerticalBarWithHeaderAndAliases.txt" />
     <Content Include="Data\Good\CustomersVerticalBarWithHeader.txt" />
     <Content Include="Data\Good\CustomersVerticalBarOptions.txt" />
     <Content Include="Data\Good\DiscardFirstReport.txt" />

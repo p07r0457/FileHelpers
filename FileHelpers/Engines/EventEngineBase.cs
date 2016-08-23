@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using FileHelpers.Events;
 
@@ -187,7 +186,8 @@ namespace FileHelpers
 
             foreach (var field in RecordInfo.Fields)
             {
-                field.FieldOrder = Array.IndexOf(headerNames, field.FieldName);
+                var fieldName = field.FieldCaption ?? field.FieldName;
+                field.FieldOrder = Array.IndexOf(headerNames, fieldName);
             }
 
             RecordInfo.SortFieldsByOrder();

@@ -743,6 +743,14 @@ namespace FileHelpers.Tests
                 }
             }
 
+            public partial class CustomersVerticalBarWithHeaderAndAliases : FileTestBase
+            {
+                protected override string GetFullPathName()
+                {
+                    return System.IO.Path.Combine("Good", "CustomersVerticalBarWithHeaderAndAliases.txt");
+                }
+            }
+
             public partial class DateFormat1 : FileTestBase
             {
                 protected override string GetFullPathName()
@@ -2120,6 +2128,13 @@ namespace FileHelpers.Tests
             public static ClassesFileTest.Good.CustomersVerticalBarWithHeader CustomersVerticalBarWithHeader
             {
                 get { return mCustomersVerticalBarWithHeader; }
+            }
+
+            private static ClassesFileTest.Good.CustomersVerticalBarWithHeaderAndAliases mCustomersVerticalBarWithHeaderAndAliases = new ClassesFileTest.Good.CustomersVerticalBarWithHeaderAndAliases();
+
+            public static ClassesFileTest.Good.CustomersVerticalBarWithHeaderAndAliases CustomersVerticalBarWithHeaderAndAliases
+            {
+                get { return mCustomersVerticalBarWithHeaderAndAliases; }
             }
 
             private static ClassesFileTest.Good.DateFormat1 mDateFormat1 = new ClassesFileTest.Good.DateFormat1();

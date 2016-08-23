@@ -61,5 +61,26 @@ namespace FileHelpers.Tests.CommonTests
             Assert.AreEqual(firstRecord.City, "Berlin");
             Assert.AreEqual(firstRecord.Country, "Germany");
         }
+
+        [Test]
+        public void UseHeaderToResolveAliasedFields()
+        {
+            var engine = new FileHelperEngine<CustomersVerticalBarWithHeaderAndAliases>
+            {
+                Options = { ShouldInferColumnOrderFromHeader = true }
+            };
+            var records = engine.ReadFile(FileTest.Good.CustomersVerticalBarWithHeaderAndAliases.Path);
+
+            Assert.AreEqual(EnumerableExtensions.Count(records), 91);
+
+            var firstRecord = records.First();
+            Assert.AreEqual(firstRecord.CustomerID, "ALFKI");
+            Assert.AreEqual(firstRecord.CompanyName, "Alfreds Futterkiste");
+            Assert.AreEqual(firstRecord.ContactName, "Maria Anders");
+            Assert.AreEqual(firstRecord.ContactTitle, "Sales Representative");
+            Assert.AreEqual(firstRecord.Address, "Obere Str. 57");
+            Assert.AreEqual(firstRecord.City, "Berlin");
+            Assert.AreEqual(firstRecord.Country, "Germany");
+        }
     }
 }
