@@ -113,7 +113,7 @@ namespace FileHelpers
         RecordOperations Operations { get; }
 
         /// <summary>
-        /// Sort fields by the order
+        /// Sort fields by the order (Also performs some error checking)
         /// </summary>
         void SortFieldsByOrder();
 

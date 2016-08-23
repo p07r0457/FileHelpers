@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using FileHelpers.Events;
@@ -166,6 +167,41 @@ namespace FileHelpers
             return e.RecordLine;
         }
 
+        /// <summary>
+        /// Sets the field order based on file header.
+        /// </summary>
+        protected void SetFieldOrderBasedOnFileHeader()
+        {
+            if (!Options.ShouldInferColumnOrderFromHeader
+                || RecordInfo.Fields.Any(field => field.FieldOrder.HasValue)
+                || string.IsNullOrEmpty(mHeaderText)) return;
 
+            var headerLine = new LineInfo(mHeaderText);
+            var headerNames = new object[RecordInfo.FieldCount];
+
+            for (var i = 0; i < RecordInfo.FieldCount; i++)
+            {
+                var fieldValue = RecordInfo.Fields[i].ExtractFieldValue(headerLine);
+                headerNames[i] = ExtractHeaderName(fieldValue);
+            }
+
+            foreach (var field in RecordInfo.Fields)
+            {
+                field.FieldOrder = Array.IndexOf(headerNames, field.FieldName);
+            }
+
+            RecordInfo.SortFieldsByOrder();
+        }
+
+        /// <summary>
+        /// Extracts the name of the header field.
+        /// </summary>
+        /// <param name="fieldValue">The field value (Such as from FieldBase.ExtractFieldValue(LineInfo))</param>
+        private static string ExtractHeaderName(object fieldValue)
+        {
+            return fieldValue.ToString()
+                             .Replace("\n", string.Empty)
+                             .Replace("\r", string.Empty);
+        }
     }
 }

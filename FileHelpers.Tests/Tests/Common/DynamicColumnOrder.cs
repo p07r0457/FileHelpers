@@ -16,20 +16,20 @@ namespace FileHelpers.Tests.CommonTests
         {
             var engine = new FileHelperEngine<CustomersVerticalBarWithHeader>
             {
-                Options = { InferColumnOrderFromHeader = true }
+                Options = { ShouldInferColumnOrderFromHeader = true }
             };
             var records = engine.ReadFile(FileTest.Good.CustomersVerticalBarWithHeader.Path);
 
-            Check.That(EnumerableExtensions.Count(records) == 91);
+            Assert.AreEqual(EnumerableExtensions.Count(records), 91);
 
             var firstRecord = records.First();
-            Check.That(firstRecord.CustomerID == "ALFKI");
-            Check.That(firstRecord.CompanyName == "Alfreds Futterkiste");
-            Check.That(firstRecord.ContactName == "Maria Anders");
-            Check.That(firstRecord.ContactTitle == "Sales Representative");
-            Check.That(firstRecord.Address == "Obere Str. 57");
-            Check.That(firstRecord.City == "Berlin");
-            Check.That(firstRecord.Country == "Germany");
+            Assert.AreEqual(firstRecord.CustomerID, "ALFKI");
+            Assert.AreEqual(firstRecord.CompanyName, "Alfreds Futterkiste");
+            Assert.AreEqual(firstRecord.ContactName, "Maria Anders");
+            Assert.AreEqual(firstRecord.ContactTitle, "Sales Representative");
+            Assert.AreEqual(firstRecord.Address, "Obere Str. 57");
+            Assert.AreEqual(firstRecord.City, "Berlin");
+            Assert.AreEqual(firstRecord.Country, "Germany");
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace FileHelpers.Tests.CommonTests
         {
             var engine = new FileHelperAsyncEngine<CustomersVerticalBarWithHeader>
             {
-                Options = { InferColumnOrderFromHeader = true }
+                Options = { ShouldInferColumnOrderFromHeader = true }
             };
 
             CustomersVerticalBarWithHeader firstRecord;
@@ -53,13 +53,13 @@ namespace FileHelpers.Tests.CommonTests
                 enumerator.MoveNext();
             }
 
-            Check.That(firstRecord.CustomerID == "ALFKI");
-            Check.That(firstRecord.CompanyName == "Alfreds Futterkiste");
-            Check.That(firstRecord.ContactName == "Maria Anders");
-            Check.That(firstRecord.ContactTitle == "Sales Representative");
-            Check.That(firstRecord.Address == "Obere Str. 57");
-            Check.That(firstRecord.City == "Berlin");
-            Check.That(firstRecord.Country == "Germany");
+            Assert.AreEqual(firstRecord.CustomerID, "ALFKI");
+            Assert.AreEqual(firstRecord.CompanyName, "Alfreds Futterkiste");
+            Assert.AreEqual(firstRecord.ContactName, "Maria Anders");
+            Assert.AreEqual(firstRecord.ContactTitle, "Sales Representative");
+            Assert.AreEqual(firstRecord.Address, "Obere Str. 57");
+            Assert.AreEqual(firstRecord.City, "Berlin");
+            Assert.AreEqual(firstRecord.Country, "Germany");
         }
     }
 }

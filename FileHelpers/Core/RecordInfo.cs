@@ -344,14 +344,19 @@ namespace FileHelpers
         }
 
         /// <summary>
-        /// Sort fields by the order
+        /// Sort fields by the order (Also performs some error checking)
         /// </summary>
         public void SortFieldsByOrder()
         {
-            if (Fields.All(field => !field.FieldOrder.HasValue)) return;
-
             var fields = Fields.ToList();
-            fields.Sort((x, y) => x.FieldOrder.Value.CompareTo(y.FieldOrder.Value));
+
+            SortFieldsByOrder(fields);
+            
+            for (var i = 0; i < FieldCount; i++)
+            {
+                fields[i].ParentIndex = i;
+                CheckForOrderProblems(fields[i], fields);
+            }
 
             Fields = fields.ToArray();
         }

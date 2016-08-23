@@ -201,6 +201,8 @@ namespace FileHelpers
                 }
             }
 
+            SetFieldOrderBasedOnFileHeader();
+
             mAsyncReader = new ForwardReader(recordReader, RecordInfo.IgnoreLast, mLineNumber) {
                 DiscardForward = true
             };
