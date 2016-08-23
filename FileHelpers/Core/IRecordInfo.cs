@@ -112,6 +112,11 @@ namespace FileHelpers
         /// </summary>
         RecordOperations Operations { get; }
 
+        /// <summary>
+        /// Sort fields by the order
+        /// </summary>
+        void SortFieldsByOrder();
+
         void RemoveField(string fieldname);
     }
 }

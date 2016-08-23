@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -340,6 +341,19 @@ namespace FileHelpers
         {
             if (resFields.FindAll(x => x.FieldOrder.HasValue).Count > 0)
                 resFields.Sort((x, y) => x.FieldOrder.Value.CompareTo(y.FieldOrder.Value));
+        }
+
+        /// <summary>
+        /// Sort fields by the order
+        /// </summary>
+        public void SortFieldsByOrder()
+        {
+            if (Fields.All(field => !field.FieldOrder.HasValue)) return;
+
+            var fields = Fields.ToList();
+            fields.Sort((x, y) => x.FieldOrder.Value.CompareTo(y.FieldOrder.Value));
+
+            Fields = fields.ToArray();
         }
 
         /// <summary>

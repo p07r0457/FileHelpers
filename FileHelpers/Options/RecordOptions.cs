@@ -180,6 +180,11 @@ namespace FileHelpers.Options
         {
             get { return mIgnoreCommentInfo; }
         }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether we should attempt to infer column order from the file/stream header.
+        /// </summary>
+        public bool InferColumnOrderFromHeader { get; set; }
 
         /// <summary>
         /// Used to tell the engine which records must be included or excluded

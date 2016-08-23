@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using FileHelpers.Events;
 
@@ -216,6 +217,8 @@ namespace FileHelpers
                     }
                 }
 
+                SetFieldOrderBasedOnFileHeader();
+                
                 bool byPass = false;
 
                 if (maxRecords < 0)
@@ -307,6 +310,48 @@ namespace FileHelpers
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Sets the field order based on file header.
+        /// </summary>
+        private void SetFieldOrderBasedOnFileHeader()
+        {
+            if (!Options.InferColumnOrderFromHeader
+                || RecordInfo.Fields.Any(field => field.FieldOrder.HasValue)
+                || string.IsNullOrEmpty(mHeaderText)) return;
+
+            var headerLine = new LineInfo(mHeaderText);
+            var headerNames = new object[RecordInfo.FieldCount];
+
+            for (var i = 0; i < RecordInfo.FieldCount; i++)
+            {
+                var fieldValue = RecordInfo.Fields[i].ExtractFieldValue(headerLine);
+                headerNames[i] = ExtractHeaderName(fieldValue);
+            }
+
+            foreach (var field in RecordInfo.Fields)
+            {
+                field.FieldOrder = Array.IndexOf(headerNames, field.FieldName);
+            }
+
+            RecordInfo.SortFieldsByOrder();
+
+            for (var i = 0; i < RecordInfo.FieldCount; i++)
+            {
+                RecordInfo.Fields[i].ParentIndex = i;
+            }
+        }
+
+        /// <summary>
+        /// Extracts the name of the header field.
+        /// </summary>
+        /// <param name="fieldValue">The field value (Such as from FieldBase.ExtractFieldValue(LineInfo))</param>
+        private static string ExtractHeaderName(object fieldValue)
+        {
+            return fieldValue.ToString()
+                             .Replace("\n", string.Empty)
+                             .Replace("\r", string.Empty);
         }
 
         #endregion
